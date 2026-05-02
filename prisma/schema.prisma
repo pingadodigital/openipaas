@@ -1,0 +1,57 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Client {
+  id        String   @id @default(uuid())
+  name      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  apiKeys        ApiKey[]
+  linkedAccounts LinkedAccount[]
+}
+
+model ApiKey {
+  id        String   @id @default(uuid())
+  key       String   @unique // The Bearer token our clients will use
+  clientId  String
+  createdAt DateTime @default(now())
+  expiresAt DateTime?
+
+  client    Client   @relation(fields: [clientId], references: [id], onDelete: Cascade)
+}
+
+model LinkedAccount {
+  id           String   @id @default(uuid())
+  clientId     String
+  provider     String   // e.g., 'CONTA_AZUL', 'OMIE'
+  accountToken String   @unique @default(uuid()) // The X-Account-Token
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  client       Client            @relation(fields: [clientId], references: [id], onDelete: Cascade)
+  credentials  OAuthCredential[]
+}
+
+model OAuthCredential {
+  id              String   @id @default(uuid())
+  linkedAccountId String
+  accessToken     String
+  refreshToken    String?
+  erpClientId     String?  // client_id for the target ERP
+  erpClientSecret String?  // client_secret for the target ERP
+  expiresAt       DateTime?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  linkedAccount   LinkedAccount @relation(fields: [linkedAccountId], references: [id], onDelete: Cascade)
+}
