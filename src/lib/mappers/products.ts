@@ -1,6 +1,7 @@
 import { 
   ContaAzulProduct, 
   ContaAzulProductCreate, 
+  ContaAzulProductStatus,
   ContaAzulCategory, 
   ContaAzulBrand, 
   ContaAzulUnit 
@@ -25,8 +26,8 @@ export function mapContaAzulProductToUnified(ca: ContaAzulProduct): UnifiedProdu
     sku: ca.sku || (ca as any).codigo_sku || ca.codigo || null,
     ean: ca.ean || (ca as any).codigo_ean || null,
     price: ca.valor_venda,
-    costPrice: ca.custo_medio || (ca.estoque as any)?.custo_medio || null,
-    stockQuantity: ca.saldo || (ca.estoque as any)?.quantidade_total || 0,
+    costPrice: ca.custo_medio || (ca as any).estoque?.custo_medio || null,
+    stockQuantity: ca.saldo || (ca as any).estoque?.quantidade_total || 0,
     status: (ca.status === 'ATIVO' || (ca as any).ativo === true ? 'ACTIVE' : 'INACTIVE') as 'ACTIVE' | 'INACTIVE',
     updatedAt: ca.ultima_atualizacao || null,
     description: ca.descricao,
@@ -58,7 +59,7 @@ export function mapUnifiedToContaAzulProductCreate(unified: Partial<UnifiedProdu
     valor_venda: unified.price,
     codigo_sku: unified.sku || undefined,
     codigo_ean: unified.ean || undefined,
-    status: unified.status === 'ACTIVE' ? 'ATIVO' : 'INACTIVE',
+    status: (unified.status === 'ACTIVE' ? 'ATIVO' : 'INATIVO') as ContaAzulProductStatus,
     descricao: unified.description
   };
 }
