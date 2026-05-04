@@ -1,0 +1,11 @@
+{
+  "id": "ca-uuid-12345",
+  "nome": "Conta Azul Teste LTDA",
+  "email": "contato@ca-teste.com.br",
+  "documento": "12345678000190",
+  "tipo_pessoa": "JURÍDICA",
+  "ativo": true,
+  "data_criacao": "2026-05-01T10:00:00Z",
+  "data_alteracao": "2026-05-03T10:00:00Z",
+  "telefone": "(11) 99999-8888"
+}

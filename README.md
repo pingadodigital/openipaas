@@ -1,36 +1,30 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# iPaaS - Unified API Gateway
 
-## Getting Started
+A standardized, multi-ERP Unified API gateway built with Next.js, Prisma, and Zod.
 
-First, run the development server:
+## Quick Start (Full Docker Setup)
+
+The entire project is containerized. To get everything running (Next.js, PostgreSQL, Migrations, and Seed Data) with a single command, just run:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+docker-compose up --build
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+This command will:
+1. Build the Next.js production image (standalone mode).
+2. Start the PostgreSQL database.
+3. Wait for the DB, then automatically run migrations and seeds.
+4. Expose the API on `http://localhost:3000`.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Test Credentials (Seed)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- **Master API Key**: `dev-master-key-001` (Use as Bearer token)
+- **Conta Azul X-Account-Token**: `dev-token-ca-123`
+- **Omie X-Account-Token**: `dev-token-omie-123`
 
-## Learn More
+## Architecture
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- **Plugin-Based**: Each ERP has its own provider implementation.
+- **English-First**: All endpoints return standardized English field names.
+- **Zod Defense**: Mandatory validation layer for all outgoing data.
+- **Remote Data**: Original raw payloads preserved in the `remoteData` node.

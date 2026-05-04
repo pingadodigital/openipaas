@@ -22,6 +22,7 @@ export async function refreshErpToken(credentialId: string) {
 
     const basicAuth = Buffer.from(`${contaAzulClientId}:${contaAzulClientSecret}`).toString('base64')
 
+    console.log("[TokenRefresh] Sending request to auth.contaazul.com...")
     const response = await fetch('https://auth.contaazul.com/oauth2/token', {
       method: 'POST',
       headers: {
@@ -36,11 +37,13 @@ export async function refreshErpToken(credentialId: string) {
 
     if (!response.ok) {
       const errText = await response.text()
-      console.error("[TokenRefresh] Failed to refresh Conta Azul token:", errText)
-      throw new Error(`Failed to refresh token: ${response.statusText}`)
+      console.error(`[TokenRefresh Raw Error] Status: ${response.status} | Body: ${errText}`)
+      throw new Error(`Failed to refresh token: ${response.status} ${response.statusText}`)
     }
 
     const data = await response.json()
+    console.log("[TokenRefresh] New tokens received successfully.")
+    
     const expiresAt = data.expires_in ? new Date(Date.now() + data.expires_in * 1000) : null
 
     const updated = await prisma.oAuthCredential.update({
@@ -53,7 +56,6 @@ export async function refreshErpToken(credentialId: string) {
       }
     })
 
-    console.log(`[TokenRefresh] Token refreshed successfully for CONTA_AZUL`)
     return updated
   }
 
