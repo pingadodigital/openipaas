@@ -22,7 +22,6 @@
     "@base-ui/react": "^1.4.1",
     "@prisma/client": "^5.22.0",
     "@radix-ui/react-slot": "^1.2.4",
-    "@rolldown/binding-win32-x64-msvc": "^1.0.0-rc.18",
     "@scalar/api-reference-react": "^0.9.32",
     "@types/three": "^0.184.0",
     "class-variance-authority": "^0.7.1",
