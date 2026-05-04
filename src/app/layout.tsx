@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Open IpaaS | Universal B2B Integrations",
     description: "The open-source framework to unify global B2B platforms under a single, strongly-typed English-first API.",
-    url: "https://openipaas.dev",
+    url: "https://openipaas.com",
     siteName: "Open IpaaS",
     images: [
       {
@@ -31,8 +31,8 @@ export const metadata: Metadata = {
     images: ["/og-image.png"],
   },
   icons: {
-    icon: "/logo.ico",
-    shortcut: "/logo.ico",
+    icon: "/favicon.ico",
+    shortcut: "/favicon.ico",
     apple: "/logo.png",
   },
 };
