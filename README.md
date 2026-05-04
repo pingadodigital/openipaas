@@ -1,30 +1,70 @@
-# iPaaS - Unified API Gateway
+# 🚀 Open IpaaS
+**The open-source standard for universal B2B integrations.**
 
-A standardized, multi-ERP Unified API gateway built with Next.js, Prisma, and Zod.
+Open IpaaS is a high-performance Node.js (Next.js) framework designed to unify communication with any global SaaS platform (CRMs, ERPs, HRIS, Ticketing, Accounting, e-Commerce, etc.) under a single **English-first**, **strongly-typed**, and **runtime-validated** API.
 
-## Quick Start (Full Docker Setup)
+We believe that enterprise-grade integrations shouldn't be locked behind expensive closed-source paywalls. Open IpaaS gives the community the power to build once and integrate with hundreds of platforms seamlessly.
 
-The entire project is containerized. To get everything running (Next.js, PostgreSQL, Migrations, and Seed Data) with a single command, just run:
+[Website](https://openipaas.com) | [Documentation](https://openipaas.com/docs) | [Contributing](#contributing)
 
-```bash
-docker-compose up --build
+---
+
+## 💎 Why Open IpaaS?
+
+Integrating with fragmented business APIs is painful. You have to deal with non-standard variables, inconsistent payloads, multiple languages, and missing typing across different software categories. Open IpaaS solves this with:
+
+- 🌍 **English-First Architecture**: Your application communicates entirely in standardized English. The framework handles the translation and normalization of any upstream system (Salesforce, Shopify, QuickBooks, Zendesk, etc.) under the hood.
+- 🛡️ **Zod Shield**: Strict runtime validation. If a platform changes its API contract without warning, our shield blocks the inconsistency before it crashes your app.
+- 🔌 **Universal Plugin Architecture**: Add new providers in minutes using our automated CLI. No need to touch the core routing logic.
+- 📦 **Docker-Native DX**: Spin up the entire environment (Postgres DB + App + Seed data) with a single command.
+
+## 🛠 Architecture
+
+```mermaid
+graph LR
+    User([Developer]) --> UnifiedAPI[Unified API Route]
+    UnifiedAPI --> Factory[Provider Factory]
+    Factory --> Provider[SaaS Provider Plugin]
+    Provider --> Mapper[Zod Mapper]
+    Mapper --> SaaS[(Upstream SaaS API)]
 ```
 
-This command will:
-1. Build the Next.js production image (standalone mode).
-2. Start the PostgreSQL database.
-3. Wait for the DB, then automatically run migrations and seeds.
-4. Expose the API on `http://localhost:3000`.
+## 🚀 Quick Start
 
-## Test Credentials (Seed)
+Open IpaaS was built for a flawless Developer Experience (DX).
 
-- **Master API Key**: `dev-master-key-001` (Use as Bearer token)
-- **Conta Azul X-Account-Token**: `dev-token-ca-123`
-- **Omie X-Account-Token**: `dev-token-omie-123`
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com/felipeperson/openipaas.git
+   cd openipaas
+   ```
 
-## Architecture
+2. **One-Click Launch:**
+   ```bash
+   docker-compose up --build
+   ```
+   *This will boot up Postgres, run migrations, and seed the database with test credentials and mock accounts.*
 
-- **Plugin-Based**: Each ERP has its own provider implementation.
-- **English-First**: All endpoints return standardized English field names.
-- **Zod Defense**: Mandatory validation layer for all outgoing data.
-- **Remote Data**: Original raw payloads preserved in the `remoteData` node.
+3. **Access the Interactive Docs:**
+   Open `http://localhost:3000/docs` to test the unified endpoints immediately.
+
+## ➕ Adding a New Provider
+
+Creating a new provider (e.g., HubSpot, Shopify, Jira, SAP) is automated via our CLI:
+
+```bash
+npm run generate-provider hubspot
+```
+This command instantly generates the provider class, implements the `IUnifiedProvider` interface stubs, and creates the boilerplate for unit tests.
+
+---
+
+## 🤝 Contributing
+
+We want to build the largest open-source catalog of B2B integrations in the world. Whether it is an obscure local accounting system or a global CRM giant, we want it in Open IpaaS.
+
+If you need a specific integration, the best way to get it is by creating a Pull Request following our plugin architecture. Check out our [Contributing Guide](CONTRIBUTING.md) to get started.
+
+## 📄 License
+
+Distributed under the MIT License. See `LICENSE` for more information.
