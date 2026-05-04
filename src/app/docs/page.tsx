@@ -9,7 +9,7 @@ export default function DocsPage() {
     <div className="h-screen w-full">
       <ApiReferenceReact
         configuration={{
-          spec: { content: openApiSpec },
+          content: openApiSpec,
           theme: "default",
           layout: "modern",
           hideModels: true,
